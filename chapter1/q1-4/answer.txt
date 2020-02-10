@@ -1,0 +1,11 @@
+われわれの評価モデルは、演算子が合成式である組合せでも使えることを観察せよ。
+それに従って、次の手続きの振る舞いを述べよ。
+
+(define (a-plus-abs-b a b)
+    ((if (> b 0) + -) a b))
+
++ => #[arity-dispatched-procedure 12]
+- => #[arity-dispatched-procedure 13]
+
+if の結果として '+' '-' のいづれかを返却する。
+その値を、組合せの operator として利用可能である。
