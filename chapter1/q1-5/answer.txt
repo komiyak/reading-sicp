@@ -1,0 +1,49 @@
+Ben Bitdiddle は、彼の対面している解釈系が、作用的順序の評価を使っているか、正規順序の評価を使っているか
+決定するテストを発明した。次の二つの手続きを定義した。
+
+(define (p) (p))
+
+(define (test x y)
+    (if (= x 0)
+        0
+        y))
+
+彼は次に式
+
+(test 0 (p))
+
+を評価してみた。
+
+作用的順序の評価を使う解釈系で、
+Ben はどういう振る舞いを見るか。
+正規順序の評価を使う解釈系で、
+彼はどういう振る舞いを見るか、説明せよ。
+
+(特殊形式 if の評価規則は、解釈系が正規順序と作用的順序のどちらを使うか無関係に同じとする。
+述語式を最初に評価し、その結果が帰結式と代替式のいずれを評価するかを決める。)
+
+
+作用的順序の評価の場合、(test 0 (p)) の段階で (p) が評価されてしまい無限ループ。
+正規順序の評価の場合、(p) が評価されずに、そのまま返却される。
+
+---
+http://community.schemewiki.org/?sicp-ex-1.5
+
+Using applicative-order evaluation (作用的順序の評価),
+the evaluation of `(test 0 (p)) never terminates,
+because (p) is infinitely expanded to itself:
+```
+(test 0 (p))
+(test 0 (p))
+(test 0 (p))
+```
+... and so on.
+
+Using nomal-order evaluation (正規順序の評価),
+the expression evaluates, step by step, to 0:
+```
+(test 0 (p))
+(if (= 0 0) 0 (p))
+(if #t 0 (p))
+=> 0
+```
