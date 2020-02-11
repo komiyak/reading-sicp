@@ -31,3 +31,9 @@ To run REPL.
 ```
 mit-scheme
 ```
+
+or using a file.
+
+```
+mit-scheme < some.scm
+```
