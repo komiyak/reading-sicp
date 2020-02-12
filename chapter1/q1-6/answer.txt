@@ -1,0 +1,35 @@
+Alyssa P. Hacker は if が特殊形式である理由がわからない。
+cond を利用し、普通の手続きとして定義してはいけない？
+Alyssa の友人の Eva Lu Ator はそうすることはもちろん出来るといって、
+if の新版を定義した。
+
+
+(define (new-if predicate then-clause else-clause)
+  (cond (predicate then-clause)
+        (else esle-caluse)))
+
+(new-if (= 2 3) 0 5) => 5
+(new-if (= 1 1) 0 5) => 0
+
+Alyssa は喜び、平方根のプログラムを書き直すのに new-if を使った
+
+(define (sqrt-iter guess x)
+  (new-if (good-enough? guess x)
+          guess
+          (sqrt-iter (improve guess x)
+                     x)))
+
+これをしようとすると、何が起きるか説明せよ。
+
+
+# My answer
+
+new-if の predicate, then-clause, else-clause の評価が先に行われ、
+その後で new-if の cond に進む。
+そのため sqrt-iter に new-if を使うと、必ず else-clause の (sqrt-iter) が実行されてしまい、
+無限ループに陥る。 (maximum recursion depth exceeded 再帰呼び出しのオーバーフロー)
+
+(O)
+
+もっと簡潔な解説は new-if は 作用的順序の評価（applicative-order） のため、
+new-if の３つ目の sqrt-iter が常に呼び出され続ける。
