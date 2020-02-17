@@ -5,10 +5,17 @@
   (average guess (/ x guess)))
 
 (define (good-enough? guess x)
+  (display "guess: ")
+  (display guess)
+  (display ", x: ")
+  (display x)
+  (display ", diff: ")
+  (display (abs (- (square guess) x)))
+  (newline)
   (< (abs (- (square guess) x)) 0.001))
 
 (define (sqrt-iter guess x)
-  (display "called sqr-iter")
+  (display "called (sqr-iter) ")
   (newline)
   (if (good-enough? guess x)
       guess
